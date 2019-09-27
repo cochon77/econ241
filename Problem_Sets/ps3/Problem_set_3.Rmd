@@ -1,0 +1,67 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Part4
+
+##1.
+
+**(b)**
+
+The earliest data of South Korea is 1953, the latest is 2014.
+
+```{r}
+suppressMessages(library(dplyr))
+penn_world <- read.csv("~/Documents/2017-18/ECON241/Problem_Sets/ps3/pwt_ex_ps3.csv")
+korea <- penn_world %>% filter(countrycode == "KOR") %>% 
+  mutate(gdpPercap = rgdpe/emp, capPercap = rkna/emp)
+growthRate_korea <- korea %>% 
+  summarize(`Output Growth Rate` =
+                        (gdpPercap[nrow(korea)]/gdpPercap[1])^(1/(year[nrow(korea)]-year[1]))-1,
+            `Physical Capital Growth Rate` =
+                        (capPercap[nrow(korea)]/capPercap[1])^(1/(year[nrow(korea)]-year[1]))-1, 
+            `Human Capital Growth Rate` = 
+                        (hc[nrow(korea)]/hc[1])^(1/(year[nrow(korea)]-year[1]))-1)
+knitr::kable(growthRate_korea)
+growthRate_productivity_korea <- growthRate_korea$`Output Growth Rate` - 
+  1/3*growthRate_korea$`Physical Capital Growth Rate` - 
+  2/3*(growthRate_korea$`Human Capital Growth Rate`)
+growthRate_factors_korea <- growthRate_korea$`Output Growth Rate` - 
+  growthRate_productivity_korea
+```
+
+$\frac{\Delta A}{A}$ = $\frac{\Delta y}{y}$ - $\alpha$ $\frac{\Delta k}{k}$ - (1-$\alpha$) $\frac{\Delta h}{h}$ = `r round(growthRate_productivity_korea, digits=3)`
+
+$\frac{\Delta \text{Factors of production}}{\text{Factors of production}}$ = $\frac{\Delta y}{y}$ - $\frac{\Delta A}{A}$ = `r round(growthRate_factors_korea, digits=3)`
+
+**(c)**
+
+```{r}
+us <- penn_world %>% filter(countrycode == "USA", year == 2014) %>% 
+  mutate(gdpPercap = rgdpe/emp, capPercap = rkna/emp)
+korea_2014 <- korea %>% filter(year == 2014)
+ratio_productivity <- (korea_2014$gdpPercap/us$gdpPercap)/
+  ((korea_2014$capPercap^(1/3)*korea_2014$hc^(2/3))/(us$capPercap^(1/3)*us$hc^(2/3)))
+```
+
+Relative productivity of Korea to US ($\frac{A_{Korea}}{A_{US}}$) = $\frac{\text{Ratio of y's}}{\text{Ratio of factors}}$ = $\frac{\frac{y_{Korea}}{y_{US}}}{\frac{k_{Korea}^\alpha  \times h_{Korea}^{1-\alpha}}{k_{US}^\alpha  \times h_{US}^{1-\alpha}}}$ = `r round(ratio_productivity, digits = 3)`
+
+##2.
+
+```{r}
+productivity_gap <- c(10,20,30,40,50,75,100,125) %>% data.frame()
+names(productivity_gap) = "years"
+productivity_gap <- productivity_gap %>% 
+  mutate(technology = (1+growthRate_productivity_korea)^(-years))
+productivity_gap <- productivity_gap %>% 
+  mutate(efficiency = ratio_productivity/technology)
+names(productivity_gap) = 
+  c("Years Behind","Relative Levels of Technology to the US","Relative Efficiency to the US")
+knitr::kable(productivity_gap)
+```
+
+

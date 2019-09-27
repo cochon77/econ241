@@ -1,0 +1,56 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###2.
+
+**(a)**
+
+```{r}
+suppressMessages(library(dplyr))
+pwt <- read.csv("~/Documents/2017-18/ECON241/Problem_Sets/ps2/pwt_and_bl_excerpt.csv")
+pwt <- pwt %>% mutate(humancap = ifelse(yr_sch <= 4, 1*1.134^(yr_sch), 
+                                        ifelse(yr_sch <= 8, 1*(1.134^4)*1.101^(yr_sch-4), 
+                                               1*(1.134^4)*(1.101^4)*1.068^(yr_sch-8))), 
+                      gdpPercap = rgdpna/emp)
+```
+
+**(b)**
+
+```{r}
+US_Korea <- pwt %>% filter(country %in% c("United States", "Republic of Korea"))
+predict1 <- US_Korea[1,10]/US_Korea[2,10]
+actual1 <- US_Korea[1,11]/US_Korea[2,11]
+```
+
+Predicted income ratio ($\frac{h~Korea~}{h~US~}$) = `r predict1`
+\newline
+Actual income ratio ($\frac{y~Korea~}{y~US~}$) = `r actual1`
+
+**(c)**
+
+```{r}
+US_Korea <- US_Korea %>% mutate(capPercap = rkna/emp, 
+                                savingsRate = (delta+n)*capPercap/gdpPercap)
+predict2 <- (US_Korea[1,13]/US_Korea[2,13])^(1/2)
+```
+
+Assuming $\alpha$ = $\frac{1}{3}$,
+predicted income ratio ($\sqrt{\frac{\frac{\gamma~Korea}{\delta+n}}{\frac{\gamma~US}{\delta+n}}}$) = `r predict2`
+
+**(d)**
+
+```{r}
+predict3 <- predict1*predict2
+```
+
+Predicted income ratio ($\frac{h~Korea~}{h~US~}$ $\times$
+$\sqrt{\frac{\frac{\gamma~Korea}{\delta+n}}{\frac{\gamma~US}{\delta+n}}}$)= `r predict3`
+
+**(e)**
+
+We may assume that there is a huge discrepancy in productivity between the two countries. 

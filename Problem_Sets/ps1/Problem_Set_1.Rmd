@@ -1,0 +1,47 @@
+---
+title: "Problem Set Part 4"
+author: "Colin Pi"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+data <- read.csv("~/Documents/2017-18/ECON241/Problem_Sets/ps1/pwt_excerpt.csv")
+```
+
+**(A)**
+
+```{r}
+data <- data %>% mutate(gdpPercap = rgdpna/emp, capPercap = rkna/emp)
+mean(data$gdpPercap)
+cor(data$gdpPercap, data$capPercap)
+```
+
+
+**(B)**
+
+```{r}
+data <- data %>% mutate(savingsRate = delta*capPercap/gdpPercap)
+mean(data$savingsRate)
+```
+
+**(C)**
+
+```{r}
+data <- data %>% mutate(lnA = log(gdpPercap)-1/3*log(capPercap))
+mean(data$lnA)
+```
+
+**(D)**
+
+```{r}
+countries <- data %>% filter(country %in% c("Republic of Korea", "United States"))
+log(countries[1,9]/countries[2,9])
+countries[1,11]-countries[2,11]
+countries[1,10]/countries[2,10]
+```
+
