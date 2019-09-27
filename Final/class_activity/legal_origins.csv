@@ -1,0 +1,207 @@
+country,code,legor_uk,legor_fr,legor_ge,legor_sc,legor_so
+Aruba,ABW,0,1,0,0,0
+Afghanistan,AFG,0,1,0,0,0
+Angola,AGO,0,1,0,0,0
+Anguilla,AIA,1,0,0,0,0
+Albania,ALB,0,1,0,0,0
+Netherlands Antilles,ANT,0,1,0,0,0
+United Arab Emirates,ARE,1,0,0,0,0
+Argentina,ARG,0,1,0,0,0
+Armenia,ARM,0,1,0,0,0
+Antigua and Barbuda,ATG,1,0,0,0,0
+Australia,AUS,1,0,0,0,0
+Austria,AUT,0,0,1,0,0
+Azerbaijan,AZE,0,1,0,0,0
+Burundi,BDI,0,1,0,0,0
+Belgium,BEL,0,1,0,0,0
+Benin,BEN,0,1,0,0,0
+Burkina Faso,BFA,0,1,0,0,0
+Bangladesh,BGD,1,0,0,0,0
+Bulgaria,BGR,0,0,1,0,0
+Bahrain,BHR,1,0,0,0,0
+"Bahamas, The",BHS,1,0,0,0,0
+Bosnia and Herzegovina,BIH,0,0,1,0,0
+Belarus,BLR,0,0,1,0,0
+Belize,BLZ,1,0,0,0,0
+Bermuda,BMU,1,0,0,0,0
+Bolivia,BOL,0,1,0,0,0
+Brazil,BRA,0,1,0,0,0
+Barbados,BRB,1,0,0,0,0
+Bhutan,BTN,1,0,0,0,0
+Botswana,BWA,1,0,0,0,0
+Central African Republic,CAF,0,1,0,0,0
+Canada,CAN,1,0,0,0,0
+Switzerland,CHE,0,0,1,0,0
+Chile,CHL,0,1,0,0,0
+China,CHN,0,0,1,0,0
+Cote d'Ivoire,CIV,0,1,0,0,0
+Cameroon,CMR,0,1,0,0,0
+"Congo, Rep.",COG,0,1,0,0,0
+Colombia,COL,0,1,0,0,0
+Comoros,COM,0,1,0,0,0
+Cape Verde,CPV,0,1,0,0,0
+Costa Rica,CRI,0,1,0,0,0
+Cayman Islands,CYM,1,0,0,0,0
+Cyprus,CYP,1,0,0,0,0
+Czech Republic,CZE,0,0,1,0,0
+Germany,DEU,0,0,1,0,0
+Djibouti,DJI,0,1,0,0,0
+Dominica,DMA,1,0,0,0,0
+Denmark,DNK,0,0,0,1,0
+Dominican Republic,DOM,0,1,0,0,0
+Algeria,DZA,0,1,0,0,0
+Ecuador,ECU,0,1,0,0,0
+"Egypt, Arab Rep.",EGY,0,1,0,0,0
+Eritrea,ERI,0,1,0,0,0
+Spain,ESP,0,1,0,0,0
+Estonia,EST,0,0,1,0,0
+Ethiopia,ETH,0,1,0,0,0
+Finland,FIN,0,0,0,1,0
+Fiji,FJI,1,0,0,0,0
+France,FRA,0,1,0,0,0
+"Micronesia, Fed. Sts.",FSM,1,0,0,0,0
+Gabon,GAB,0,1,0,0,0
+United Kingdom,GBR,1,0,0,0,0
+Georgia,GEO,0,0,1,0,0
+Ghana,GHA,1,0,0,0,0
+Guinea,GIN,0,1,0,0,0
+"Gambia, The",GMB,1,0,0,0,0
+Guinea-Bissau,GNB,0,1,0,0,0
+Equatorial Guinea,GNQ,0,1,0,0,0
+Greece,GRC,0,1,0,0,0
+Grenada,GRD,1,0,0,0,0
+Guatemala,GTM,0,1,0,0,0
+Guyana,GUY,1,0,0,0,0
+"Hong Kong, China",HKG,1,0,0,0,0
+Honduras,HND,0,1,0,0,0
+Croatia,HRV,0,0,1,0,0
+Haiti,HTI,0,1,0,0,0
+Hungary,HUN,0,0,1,0,0
+Indonesia,IDN,0,1,0,0,0
+India,IND,1,0,0,0,0
+Ireland,IRL,1,0,0,0,0
+"Iran, Islamic Rep.",IRN,0,1,0,0,0
+Iraq,IRQ,0,1,0,0,0
+Iceland,ISL,0,0,0,1,0
+Israel,ISR,1,0,0,0,0
+Italy,ITA,0,1,0,0,0
+Jamaica,JAM,1,0,0,0,0
+Jordan,JOR,0,1,0,0,0
+Japan,JPN,0,0,1,0,0
+Kazakhstan,KAZ,0,1,0,0,0
+Kenya,KEN,1,0,0,0,0
+Kyrgyz Republic,KGZ,0,1,0,0,0
+Cambodia,KHM,0,1,0,0,0
+St. Kitts and Nevis,KNA,1,0,0,0,0
+"Korea, Rep.",KOR,0,0,1,0,0
+Kuwait,KWT,0,1,0,0,0
+Lao PDR,LAO,0,1,0,0,0
+Lebanon,LBN,0,1,0,0,0
+Liberia,LBR,1,0,0,0,0
+Libya,LBY,0,1,0,0,0
+St. Lucia,LCA,1,0,0,0,0
+Sri Lanka,LKA,1,0,0,0,0
+Lesotho,LSO,1,0,0,0,0
+Lithuania,LTU,0,1,0,0,0
+Luxembourg,LUX,0,1,0,0,0
+Latvia,LVA,0,0,1,0,0
+"Macao, China",MAC,0,1,0,0,0
+Morocco,MAR,0,1,0,0,0
+Moldova,MDA,0,1,0,0,0
+Madagascar,MDG,0,1,0,0,0
+Maldives,MDV,1,0,0,0,0
+Mexico,MEX,0,1,0,0,0
+"Macedonia, FYR",MKD,0,1,0,0,0
+Mali,MLI,0,1,0,0,0
+Malta,MLT,0,1,0,0,0
+Myanmar,MMR,0,0,0,0,1
+Mongolia,MNG,0,0,1,0,0
+Mozambique,MOZ,0,1,0,0,0
+Mauritania,MRT,0,1,0,0,0
+Mauritius,MUS,0,1,0,0,0
+Malawi,MWI,1,0,0,0,0
+Malaysia,MYS,1,0,0,0,0
+Namibia,NAM,1,0,0,0,0
+Niger,NER,0,1,0,0,0
+Nigeria,NGA,1,0,0,0,0
+Nicaragua,NIC,0,1,0,0,0
+Netherlands,NLD,0,1,0,0,0
+Norway,NOR,0,0,0,1,0
+Nepal,NPL,1,0,0,0,0
+New Zealand,NZL,1,0,0,0,0
+Oman,OMN,0,1,0,0,0
+Pakistan,PAK,1,0,0,0,0
+Panama,PAN,0,1,0,0,0
+Peru,PER,0,1,0,0,0
+Philippines,PHL,0,1,0,0,0
+Papua New Guinea,PNG,1,0,0,0,0
+Poland,POL,0,0,1,0,0
+Puerto Rico,PRI,0,1,0,0,0
+"Korea, Dem. Rep.",PRK,0,0,0,0,1
+Portugal,PRT,0,1,0,0,0
+Paraguay,PRY,0,1,0,0,0
+Qatar,QAT,0,1,0,0,0
+Romania,ROM,0,1,0,0,0
+Russian Federation,RUS,0,1,0,0,0
+Rwanda,RWA,0,1,0,0,0
+Saudi Arabia,SAU,1,0,0,0,0
+Sudan,SDN,1,0,0,0,0
+Senegal,SEN,0,1,0,0,0
+Singapore,SGP,1,0,0,0,0
+Solomon Islands,SLB,1,0,0,0,0
+Sierra Leone,SLE,1,0,0,0,0
+El Salvador,SLV,0,1,0,0,0
+Sao Tome and Principe,STP,0,1,0,0,0
+Suriname,SUR,0,1,0,0,0
+Slovak Republic,SVK,0,0,1,0,0
+Slovenia,SVN,0,0,1,0,0
+Sweden,SWE,0,0,0,1,0
+Swaziland,SWZ,1,0,0,0,0
+Seychelles,SYC,0,1,0,0,0
+Syrian Arab Republic,SYR,0,1,0,0,0
+Chad,TCD,0,1,0,0,0
+Togo,TGO,0,1,0,0,0
+Thailand,THA,1,0,0,0,0
+Tajikistan,TJK,0,1,0,0,0
+Turkmenistan,TKM,0,1,0,0,0
+Tonga,TON,1,0,0,0,0
+Trinidad and Tobago,TTO,1,0,0,0,0
+Tunisia,TUN,0,1,0,0,0
+Turkey,TUR,0,1,0,0,0
+Taiwan,TWN,0,0,1,0,0
+Tanzania,TZA,1,0,0,0,0
+Uganda,UGA,1,0,0,0,0
+Ukraine,UKR,0,1,0,0,0
+Uruguay,URY,0,1,0,0,0
+United States,USA,1,0,0,0,0
+Uzbekistan,UZB,0,1,0,0,0
+St. Vincent and the Grenadines,VCT,1,0,0,0,0
+"Venezuela, RB",VEN,0,1,0,0,0
+Vietnam,VNM,0,1,0,0,0
+Vanuatu,VUT,1,0,0,0,0
+West Bank and Gaza,WBG,.,.,.,.,.
+World,WLD,.,.,.,.,.
+Samoa,WSM,1,0,0,0,0
+"Yemen, Rep.",YEM,0,1,0,0,0
+Serbia and Montenegro,YUG,0,1,0,0,0
+South Africa,ZAF,1,0,0,0,0
+"Congo, Dem. Rep.",ZAR,0,1,0,0,0
+Zambia,ZMB,1,0,0,0,0
+Zimbabwe,ZWE,1,0,0,0,0
+,,,,,,
+,,,,,,
+Notes:,,,,,,
+Panel A:,,,,,,
+"In regression (1), Log of GDP per capita is ln(gdp_pop_ppp2003) ",generate y=ln(gdp_pop_ppp2003),,,,,
+"In regression (2), Log of GDP per capita is ln(gdp_pop_ppp2003)",,,,,,
+"In regression (3), Log of GDP per capita is ln(gdp_pop_ppp2003)",,,,,,
+"In regression (4), Log of GDP per capita is ln(average(gdp_pop_ppp2003,gdp_pop_ppp2004))",,,,,,
+"In regression (5), Log of GDP per capita is ln(cgdp1970)",,,,,,
+,,,,,,
+Panel B:,,,,,,
+"In regression (1), Log of GDP per capita is ln(average(gdp_pop_1999,…,gdp_pop_ppp2003)) ",,,,,,
+"In regression (2), Log of GDP per capita is ln(average(gdp_pop_ppp1999,….,gdp_pop_ppp2003))",,,,,,
+"In regression (3), Log of GDP per capita is ln(gdp_pop_ppp1994)",,,,,,
+"In regression (4), Log of GDP per capita is ln(average(gdp_pop_ppp1970,…,gdp_pop_ppp1995))",,,,,,
+"In regression (5), Log of GDP per capita is ln(average(gdp_pop_ppp1999, …., gdp_pop_ppp2003))",,,,,,
+"In regression (6), Log of GDP per capita is ln(cgdp1970)",,,,,,

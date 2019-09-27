@@ -1,0 +1,149 @@
+---
+title: "First Paper Assignment"
+subtitle: "ECON241"
+author: "Colin PI"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.
+My benchmark country is Japan
+
+##2. 
+
+```{r}
+library(readxl)
+penn_world <- read_excel("~/Documents/2017-18/ECON241/Problem_Sets/first_paper_assignment/pwt90.xlsx",
+                         sheet = 3)
+
+suppressMessages(library(dplyr))
+dataset_1 <- penn_world %>% 
+  filter(country %in% c("United States", "Republic of Korea", "Japan")) %>%
+  select(country,year,rgdpe,rgdpo,pop,emp,hc,ccon,cda,
+         cgdpe,cgdpo,rgdpna,rkna,labsh,delta,csh_c,csh_i,csh_g,csh_x,csh_m,csh_r)
+```
+
+## 3. 
+
+```{r}
+baro_lee <- read.csv("~/Documents/2017-18/ECON241/Problem_Sets/first_paper_assignment/Baro_Lee.csv")
+dataset_2 <- baro_lee %>% filter(country %in% c("USA", "Republic of Korea", "Japan"))
+```
+
+
+## 4.
+
+```{r}
+per_capita <- function(argument){
+  outcome <- dataset_1 %>% na.omit() %>% filter(country == argument) %>% 
+    filter(year %in% c(min(year),max(year))) %>% group_by(country, year) %>% 
+    summarize(rgdpe_pc = rgdpe/emp, rgdpo_pc = rgdpo/emp, 
+              cgdpe_pc = cgdpe/emp, cgdpo_pc = cgdpo/emp)
+  return(outcome)
+}
+gdp_per_capita <- lapply(c("Japan","Republic of Korea","United States"), per_capita) %>% 
+  bind_rows()
+knitr::kable(gdp_per_capita)
+```
+
+## 5.
+
+```{r}
+constant_func <- function(argument){
+  outcome <- dataset_1 %>% na.omit() %>% filter(country == argument) %>% 
+    filter(year %in% c(min(year),max(year))) %>% 
+    select(country, csh_i, delta, labsh) %>% mutate(marker = c("Earliest","Latest"))
+  average <- dataset_1 %>% na.omit() %>% filter(country == argument) %>% 
+    group_by(country) %>% 
+    summarize(csh_i = mean(csh_i), delta = mean(delta), labsh = mean(labsh)) %>% 
+    mutate(marker = "Average")
+  outcome <- bind_rows(outcome,average)
+  return(outcome)
+}
+
+constants <- lapply(c("Japan","Republic of Korea","United States"), constant_func) %>% 
+  bind_rows()
+knitr::kable(constants)
+```
+
+\newpage
+
+## 6.
+
+```{r}
+productivity_func <- function(argument){
+  outcome <- dataset_1 %>% na.omit() %>% filter(country == argument) %>% 
+    mutate(avg_labsh = mean(labsh)) %>% filter(year %in% c(min(year),max(year))) %>% 
+    mutate(Period = c("Earliest","Latest")) %>%
+    mutate(log_gdpPercap = log(rgdpna/emp), 
+           log_capitalPercap = log(rkna/emp), 
+           log_hc = log(hc),
+           log_productivity1 = log_gdpPercap-1/3*log_capitalPercap-2/3*log_hc, 
+           log_productivity2 = 
+             log_gdpPercap-(1-avg_labsh)*log_capitalPercap-avg_labsh*log_hc) %>% 
+    select(country, year, Period, log_gdpPercap, 
+           log_capitalPercap, log_productivity1, log_productivity2, log_hc)
+  return(outcome)
+}
+productivity <- lapply(c("Japan","Republic of Korea","United States"), 
+                       productivity_func) %>% bind_rows()
+knitr::kable(productivity %>% select(-log_hc))
+```
+
+## 7.
+
+```{r}
+ratio <- productivity %>% filter(Period == "Latest") %>% 
+  mutate(ratioA = exp(log_productivity1[2]-log_productivity1), 
+           ratioCap = exp(1/3*(log_capitalPercap[2]-log_capitalPercap)), 
+           ratioHc = exp(2/3*(log_hc[2]-log_hc))) %>% 
+    select(country, Period, year, ratioA, ratioCap, ratioHc) %>%
+  filter(country != "Republic of Korea")
+
+knitr::kable(ratio)
+```
+
+## 8.
+
+```{r}
+growth_rate_func <- function(nation){
+  subset <- dataset_1 %>% filter(country == nation) %>% na.omit() %>% 
+    mutate(gdpPercap = rgdpe/emp, capPercap = rkna/emp)
+  output <- subset %>% group_by(country) %>% 
+    summarize(`Output Growth Rate`= 
+                (gdpPercap[nrow(subset)]/gdpPercap[1])^(1/(year[nrow(subset)]-year[1]))-1,
+              `Physical Capital Growth Rate`=
+                (capPercap[nrow(subset)]/capPercap[1])^(1/(year[nrow(subset)]-year[1]))-1,
+              `Human Capital Growth Rate` = 
+                (hc[nrow(subset)]/hc[1])^(1/(year[nrow(subset)]-year[1]))-1,
+              `Productivity Growth Rate = Productivity's relative share of gdp growth` =
+                `Output Growth Rate` - 
+                1/3*`Physical Capital Growth Rate` -
+                2/3*`Human Capital Growth Rate`) %>% 
+    mutate(`Human Capital's relative share of gdp growth` = 
+             2/3*`Human Capital Growth Rate`,
+           `Physical Capital's relative share of gdp growth` = 
+             1/3*`Physical Capital Growth Rate`)
+  return(output)
+}
+
+growth_rate <- lapply(c("Republic of Korea","United States","Japan"), 
+                      growth_rate_func) %>% bind_rows()
+```
+
+```{r, echo=FALSE, fig.align = 'left'}
+growth_rate1 <- growth_rate %>% 
+  select(country, `Output Growth Rate`, `Physical Capital Growth Rate`, `Human Capital Growth Rate`)
+growth_rate2 <- growth_rate %>% 
+  select(-`Output Growth Rate`, -`Physical Capital Growth Rate`, -`Human Capital Growth Rate`,-`Human Capital's relative share of gdp growth`,-`Physical Capital's relative share of gdp growth`)
+growth_rate3 <- growth_rate %>% 
+  select(country,`Human Capital's relative share of gdp growth`,`Physical Capital's relative share of gdp growth`)
+
+knitr::kable(growth_rate1)
+knitr::kable(growth_rate2)
+knitr::kable(growth_rate3)
+```
+

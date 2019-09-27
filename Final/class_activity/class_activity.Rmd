@@ -1,0 +1,175 @@
+---
+title: "Class Activity"
+author: "Colin Pi"
+subtitle: "ECON 241"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(readxl)
+library(dplyr)
+library(tibble)
+library(stargazer)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(lubridate)
+```
+
+## 1. 
+
+**1)**
+
+```{r 1-1, warning=FALSE}
+finance <- 
+  read_excel("~/Documents/2017-18/ECON241/Final_Project/class_activity/WB_global_financial_development.xlsx")
+
+finance <- finance %>% filter(`Country Code` %in% c("KOR","JPN","USA"))
+
+names(finance)[c(5:60)] <- c(as.character(seq(1960,2015)))
+
+narrow_finance_func <- function(i){
+  outcome <- gather(finance %>% filter(`Series Name` == finance$`Series Name`[i]), 
+                    key = Year, value = UQ(finance$`Series Name`[i]), 5:60) %>% select(6)
+  return(outcome)
+}
+
+narrow_finance <- gather(finance %>% filter(`Series Name` == finance$`Series Name`[1]), 
+                         key = Year, value = UQ(finance$`Series Name`[1]), 5:60) %>% 
+  select(-`Series Name`,-`Series Code`) %>% bind_cols(lapply(2:3, narrow_finance_func) %>% 
+                                                        bind_cols())
+
+narrow_finance[,4:6] <- sapply(narrow_finance[,4:6], as.numeric)
+
+data_2015 <- narrow_finance %>% filter(Year == 2015)
+
+ratio_2015 <- data_2015 %>% 
+  mutate(`Ratio Deposit money/GDP` = 
+           `Deposit money banks' assets to GDP (%)`[2]/`Deposit money banks' assets to GDP (%)`,
+         `Ratio Private credit/GDP` = 
+           `Private credit by deposit money banks to GDP (%)`[2]/`Private credit by deposit money banks to GDP (%)`,
+         `Ratio Stock market/GDP` = 
+           `Stock market capitalization to GDP (%)`[2]/`Stock market capitalization to GDP (%)`) %>%
+  select(-c(4:6)) %>% filter(`Country Code` != "KOR")
+
+knitr::kable(ratio_2015 %>% select(-2,-3))
+```
+
+Private Credit ranges from 1960 to 2015. \newline
+Deposit Money Banks ranges from 1973 to 2015. \newline
+Stock market capitalization ranges from 1975 to 2015 for Japan and the United States, 1979 to 2015 for South Korea. 
+
+\newpage
+
+**2)**
+
+```{r 1-2}
+legal <- read.csv("~/Documents/2017-18/ECON241/Final_Project/class_activity/legal_origins.csv")
+origins <- legal %>% filter(code %in% c("KOR","JPN","USA"))
+knitr::kable(origins)
+```
+
+The legal origins of both South Korea and Japan are Germany. The legal origin of the United States is United Kingdom
+
+**3)**
+
+```{r 1-3}
+data_2013 <- narrow_finance %>% filter(Year == 2013)
+names(data_2013)[4:6] = c("Deposit money/GDP","Private credit/GDP","Stock market/GDP")
+knitr::kable(data_2013 %>% select(-2))
+```
+
+Both Japan and Korea have higher Deposit money/GDP than most of the countries (beyond 3rd quartile), but the United States have a Deposit money/GDP slightly higher than the median of the entire countries. \newline
+Likewise, both Japan and Korea also have higher Private credit/GDP than most of the countries (beyond 3rd quartile), but the United States have a Private credit/GDP slightly higher than the median of the entire countries. \newline
+In Stock market/GDP, however, the United States is significantly higher than the rest of the countries. Japan and Korea are also above 3rd. quartile too. \newline
+
+Both Japan and Korea devote similar portion of national income for accumulation of financial capital (probably Japan is slightly higher than Korea), but the growth rate of Korea (2.7%) is considerably higher than that of Japan (2.0%) in 2013. Also, considering that the US is the frontier in world financial market, the lower growth rate of the United States compared to these countries (whose financial sector is not as developed as the United States) poses a question whether financial development of a nation is a significant factor contributing to differences in growth rates among countries. 
+
+\newpage
+
+## 2. 
+
+```{r 2, fig.align='center', warning=FALSE, message=FALSE, fig.height=4, fig.width=6}
+read_func <- function(a,b) {
+  output <- read_excel("~/Documents/2017-18/ECON241/Final_Project/class_activity/wgidataset.xlsx", 
+                       sheet = a ,skip = 13)
+  output <- add_column(output, Series = b, .after = 2) 
+  output <- output %>% 
+    select(1:3,seq(4,106,by = 6), seq(7,109, by = 6))
+  names(output)[c(1:2,22:39)] <- c("Country/Territory","WBCode", 
+                                   as.character(seq(1996,2002, by = 2)), 
+                                   as.character(seq(2003,2016)))
+  output <- output[-1,]
+  return(output)
+}
+
+narrow_wgi_func <- function(a){
+  narrow_e <- gather(a, key = Year, value = Estimate, 4:21) %>% 
+    select(`Country/Territory`, WBCode, Year, Series, Estimate)
+  narrow_r <- gather(a[,-(4:21)], key = Year, value = Rank, 4:21) %>% 
+    select(`Country/Territory`, WBCode, Year, Series, Rank)
+  outcome <- left_join(narrow_e,narrow_r)
+  outcome[,5:6] <- sapply(outcome[,5:6], as.numeric)
+  return(outcome)
+}
+
+voc <- read_func(2,"VOC") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+sta <- read_func(3,"STA") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+gov <- read_func(4,"GOV") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+reg <- read_func(5,"REG") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+law <- read_func(6,"LAW") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+cor <- read_func(7,"COR") %>% narrow_wgi_func() %>% filter(WBCode %in% c("KOR","USA","JPN"))
+
+wgi_data <- bind_rows(voc,sta) %>% 
+  bind_rows(gov) %>% 
+  bind_rows(reg) %>% 
+  bind_rows(law) %>% 
+  bind_rows(cor)
+ 
+wgi_data$Year <- as.numeric(wgi_data$Year)
+
+wgi_data %>% ggplot(aes(x = Year, y = Estimate, color = `Country/Territory`)) +
+  geom_point() +
+  facet_wrap(~Series)
+
+wgi_data %>% ggplot(aes(x = Year, y = Rank, color = `Country/Territory`)) +
+  geom_point() +
+  facet_wrap(~Series)
+```
+
+For all 6 indicators, South Korea is in general having lower rankings and estimates relative to other two countries.  We can observe that efficiency of government and regulatory quality in South Korea drastically increased for the past 10 years, while political stability has been decreased. Several reformations in federal and financial sectors after Asian Financial Crisis and the "war against crime" reformation led by Presiden Roh during 1990s may have contributed to the rising treand in government and regulatory; however, several political scandals by Presidents and congressmen during 2000s may have undermined the poltical stability of the country. 
+
+\newpage
+
+## 3.
+
+```{r 3, fig.align='center', fig.height=4, fig.width=6}
+polity <- read_excel("~/Documents/2017-18/ECON241/Final_Project/class_activity/p4v2016.xls") %>% 
+  filter(scode %in% c("KOR","ROK","USA","JPN")) %>%
+  select(country, year, xrcomp, xropen, xconst, parreg, parcomp)
+
+polity$country[polity$country == "Korea South"] <- "Korea"
+
+polity_narrow_func <- function(a){
+  outcome <- polity %>% gather(key = Series, value = Score, a) %>%
+    select(1,2,7,8)
+  return(outcome)
+}
+
+polity <- lapply(3:7, polity_narrow_func) %>% bind_rows()
+
+polity %>% ggplot(aes(x = year, y = Score, color = country))+
+  geom_jitter() +
+  facet_wrap(~Series)
+```
+
+From the plot, we can observe 2 drops in Japan. The first drop was during 1858 to 1867. In 1858, the United States invaded in Japan and demanding for opening the border with unfair treaty (known as Harris Treaty), and the country underwent an unstable period due to western intervention. And in 1945, the United States (again) launched atomic bombs in major cities in Japan (Hiroshima and Nagasaki) to facilitated the end of the Second World War, and the huge loss of the population and infrastructures brought about instability in the country. \newline
+In South Korea, we can observe a drop in 1988, and this can be explained by the declaration of Martial Law by President Chun against June Democrary Movement (June Struggle) and mobilization of military force to deter the widespread of uprising against the autocratic government. Fortunately, this movement led to abdication of Chun and establishment of democratic regime led by a leader selected through a proper  election process. 
+
+## 4.
+
+From the results above, I may observe that the financial development, institutional quality, and the government structures are descent proxies for the levels of economic development. For instance, South Korea (in between developing and advanced economy) in general is scoring lower Relative to the US and Japan (so-called developed/advanced economy). In other words, developing worlds may need to work on improving this score in order to join the ranks of developed world. However, these numbers do not tell how or why developed countries have higher scores than developing countries, and it is necessary to look for fundamental causes of the differences in these numbers (i.e. provision of infrastructures) to fully explain why some of the countries are more developed than the others. 
